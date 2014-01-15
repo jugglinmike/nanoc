@@ -12,10 +12,17 @@ module Nanoc::Filters
     # options.
     #
     # @param [String] content The content to filter
+    # @param [Hash] params TODO: Document
     #
     # @return [String] The filtered content
     def run(content, params = {})
-      context = item.attributes.merge({ :yield => assigns[:content] })
+      context = {
+        :item => item.attributes(),
+        :yield => assigns[:content],
+        :helpers => params[:helpers],
+        :config => assigns[:config]
+      }
+
       ::Mustache.render(content, context)
     end
 
